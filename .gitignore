@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project-specific local secrets and tooling
+.env.*
+!.env.example
+debug_run.sh
+.DS_Store
+.idea/
+.vscode/

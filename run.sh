@@ -1,0 +1,1 @@
+/Users/umutcandoganay/Desktop/google-cloud-sdk/bin/gcloud functions deploy jigsaw-backend --gen2 --runtime=python311 --region=us-central1 --source=. --entry-point=jigsaw_functions --trigger-http --allow-unauthenticated --max-instances 5 --env-vars-file .env.yaml
