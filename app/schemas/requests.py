@@ -72,8 +72,11 @@ StatisticName = Literal[
 ]
 
 
-class UpdateDailyStatisticsRequest(SnakeCaseUserRequest):
+class GetDailyStatisticsRequest(SnakeCaseUserRequest):
     stat_date: date
+
+
+class UpdateDailyStatisticsRequest(GetDailyStatisticsRequest):
     stat_name: StatisticName
     delta_count: PositiveInteger
 

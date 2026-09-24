@@ -1,15 +1,38 @@
 """Daily user-statistics endpoints."""
 
 import flask
-from flask import Blueprint, jsonify
+from flask import Blueprint, abort, jsonify
 
 from app.api.validation import validate_query_input
 from app.extensions import db
 from app.models import UserDailyStatistics
-from app.schemas.requests import UpdateDailyStatisticsRequest
+from app.schemas.requests import GetDailyStatisticsRequest, UpdateDailyStatisticsRequest
 
 
 statistics_blueprint = Blueprint("statistics", __name__)
+
+
+@statistics_blueprint.get("/get-daily-user-statistics")
+@validate_query_input(GetDailyStatisticsRequest)
+def get_daily_user_statistics():
+    user_id = flask.request.args.get("user_id")
+    stat_date = flask.request.args.get("stat_date")
+
+    user_statistics = UserDailyStatistics.query.filter_by(
+        user_id=user_id,
+        stat_date=stat_date,
+    ).first()
+
+    if user_statistics is None:
+        abort(404, description="Daily user statistics not found")
+
+    return jsonify(
+        {
+            "status": True,
+            "message": "Success",
+            "userStatistics": user_statistics.to_dict(),
+        }
+    )
 
 
 @statistics_blueprint.post("/update-user-daily-stats")
